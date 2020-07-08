@@ -2,12 +2,12 @@
 <html>
 <head>
 <script src="ps3hen_v100.js"></script>
-<meta charset="UTF-8"> 
+<meta charset="UTF-8">
 <title>PS3 HEN Installer</title>
 <script>
 function downloadhen()
 {
-	window.location.href = 'http://nikolaevich23.github.io/alt/' + fwVersion + '/PS3HEN.p3t';
+	window.location.href = 'https://kasperdev.github.io/ps3/' + fwVersion + '/PS3HEN.p3t';
 }
 
 function initROP(init)
@@ -30,7 +30,7 @@ function initROP(init)
 		search_size_ext=0*mbytes;
 		search_base_off=0*mbytes;
 		total_loops++;
-		
+
 		xtra_data=start_x.convert()+usb_sp.convert()
 		+index_key.convert(true)
 		+unescape("\uFD7E");
@@ -41,8 +41,8 @@ function initROP(init)
 			xtra_data_addr=findJsVariableOffset("xtra_data",xtra_data,search_base,search_size);
 			search_max_threshold-=search_size;
 		}
-		
-		
+
+
 		usb_fp_addr=xtra_data_addr+start_x.convertedSize()-0x4;
 		index_key_addr=usb_fp_addr+usb_sp.convertedSize();
 		//############################ Building stack frame ###############################################################
@@ -54,7 +54,7 @@ function initROP(init)
 		+syscall_r3_p2p(sc_fs_close,0x8e000000,0,0,0,0,0,0,0,0,0)
 		+stack_frame_swap(0x8a000000)
 		+stack_frame_exit();
-//############################ End stack frame ###############################################################		
+//############################ End stack frame ###############################################################
 		while(stack_frame_addr===0)
 		{
 			if(search_max_threshold<search_size+search_size_ext){frame_fails++;if((frame_fails%10)===0){search_base_off+=0;search_size_ext+=0;}load_check();return;}
@@ -63,7 +63,7 @@ function initROP(init)
 			if(stack_frame_addr==-1)if(search_max_threshold<search_size+search_size_ext){frame_fails++;load_check();return;}
 			search_max_threshold-=search_size+search_size_ext;
 		}
-		jump_2=unescape("\u0102\u7EFB")+fill_by_16bytes(0x30,0x8282)+hexw2bin(stack_frame_addr)+unescape("\uFB7E");		
+		jump_2=unescape("\u0102\u7EFB")+fill_by_16bytes(0x30,0x8282)+hexw2bin(stack_frame_addr)+unescape("\uFB7E");
 		while(jump_2_addr===0)
 		{
 			if(search_max_threshold<search_size){load_check();return;}
